@@ -1,0 +1,14 @@
+pacote:
+npm install totalvoice-node --save
+
+Passos para execução do projeto:
+1)digitar um nome, telefone e clicar em adicionar contato (app informará: "contato adicionado com sucesso")
+2)apos adicionar um contato, clicar em avançar
+3)digitar uma mensagem
+4)informar a chave da API: 311fbb93c9924eb65cd2ed4e740dd05e
+5)escolher o tipo de voz
+6)clicar botao: efetuar ligação
+
+link projeto: https://corona-aviso.netlify.com/
+
+Caso queira uma gerar uma chave fazer o cadastro: https://api2.totalvoice.com.br/painel/login.php

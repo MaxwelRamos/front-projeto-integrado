@@ -3,6 +3,10 @@
   text-align: center;
 }    */
 
+.paper {
+  padding: 15;
+}
+
 .container-login {
   height: 100%;
 }

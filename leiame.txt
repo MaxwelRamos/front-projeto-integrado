@@ -8,6 +8,7 @@ Passos para execução do projeto:
 4)informar a chave da API: 311fbb93c9924eb65cd2ed4e740dd05e
 5)escolher o tipo de voz
 6)clicar botao: efetuar ligação
+7)
 
 link projeto: https://corona-aviso.netlify.com/
 

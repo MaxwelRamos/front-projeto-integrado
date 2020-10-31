@@ -52,7 +52,7 @@ export const Moedas = () => {
           <Paper className={fixedHeightPaper}>
 
             <React.Fragment>
-              <Title>Acumulo Moedas</Title>
+              <Title>Total Moedas</Title>
               <Typography component="p" variant="h4">
                 250
        </Typography>

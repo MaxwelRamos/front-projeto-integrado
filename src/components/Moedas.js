@@ -52,9 +52,9 @@ export const Moedas = () => {
           <Paper className={fixedHeightPaper}>
 
             <React.Fragment>
-              <Title>Total Moedas</Title>
+              <Title>Acumulo Moedas</Title>
               <Typography component="p" variant="h4">
-                230
+                250
        </Typography>
               {/* <Typography color="textSecondary" className={classes.depositContext}>
                 on 15 March, 2019

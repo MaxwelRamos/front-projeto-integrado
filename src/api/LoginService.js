@@ -4,7 +4,8 @@ import axios from "axios";
 export class LoginService {
 
     static _withBaseUrl(path) {
-        return `http://localhost:8080/${path}`;
+        // return `http://localhost:8080/${path}`;
+        return `https://b-meriymoney.herokuapp.com/${path}`;
     }
 
     static login({email, password}) {

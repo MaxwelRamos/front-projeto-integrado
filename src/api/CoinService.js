@@ -6,7 +6,8 @@ export class CoinService {
     static _withBaseUrl(path) {
         const user = JSON.parse(localStorage.getItem(userKey));
         axios.defaults.headers.common['authorization'] = user.token;
-        return `http://localhost:8080/${path}`;
+        // return `http://localhost:8080/${path}`;
+        return `https://b-meriymoney.herokuapp.com/${path}`;
     }
 
     static setSaldoMensal() {

@@ -10,6 +10,7 @@ import {
   Checkbox,
   Container,
   FormHelperText,
+  Grid,
   Link,
   TextField,
   Typography,
@@ -63,7 +64,7 @@ const RegisterView = () => {
       title="Register"
     >
       <Box
-        display="flex"
+        display="auto"
         flexDirection="column"
         height="100%"
         justifyContent="center"
@@ -109,6 +110,31 @@ const RegisterView = () => {
                   >
                     Merit Money
                   </Typography>
+                </Box>
+                <Grid
+                  container
+                  spacing={3}
+                >
+                </Grid>
+                <Box
+                  mt={3}
+                  mb={1}
+                >
+                  <Typography
+                    align="center"
+                    color="textSecondary"
+                    variant="body1"
+                  >
+                    Seja bem vindo!
+                  </Typography>
+                </Box>
+                {/* <Box mb={3}>
+                  <Typography
+                    color="textPrimary"
+                    variant="h2"
+                  >
+                    Merit Money
+                  </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
@@ -116,7 +142,7 @@ const RegisterView = () => {
                   >
                     Seja bem vindo!
                   </Typography>
-                </Box>
+                </Box> */}
                 <TextField
                   error={Boolean(touched.name && errors.name)}
                   fullWidth

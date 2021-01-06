@@ -65,11 +65,11 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
-        </RouterLink>
+        <IconButton color="inherit" onClick={logout}>
+            <InputIcon />
+        </IconButton>
         <Box flexGrow={1} />
-        <h2>{`Disponível para doar: ${quantidadeMensal} - ${(userLogado ? userLogado.email : '')}`}</h2> 
+        <h4>{`Para doar: ${quantidadeMensal} - ${(userLogado ? userLogado.email : '')}`}</h4>
         <Hidden mdDown>
           <IconButton color="inherit">
             <Badge
@@ -78,9 +78,6 @@ const TopBar = ({
               variant="dot"
             >
             </Badge>
-          </IconButton>
-          <IconButton color="inherit" onClick={logout}>
-            <InputIcon />
           </IconButton>
         </Hidden>
         <Hidden lgUp>

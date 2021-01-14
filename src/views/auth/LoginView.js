@@ -41,7 +41,6 @@ const LoginView = () => {
   const [mensagem, setMensagem] = useState('');
 
   const [formSubmetido, setFormSubmetido] = useState(false);
-  const userKey = '_meritMoney_user';
 
   useEffect(() => {
     validaToken()
@@ -49,19 +48,19 @@ const LoginView = () => {
 
   const validaToken = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem(userKey))
+      const user = JSON.parse(localStorage.getItem(process.env.REACT_APP_USERKEY))
       await ValidadeTokenService.ValidadeToken({ token: user.token })
         .then(response => {
           if (response.data.valid)
             navigate('/app/dashboard', { replace: true });
           else
-            localStorage.removeItem(userKey)
+            localStorage.removeItem(process.env.REACT_APP_USERKEY)
         })
         .catch(e => {
-          localStorage.removeItem(userKey)
+          localStorage.removeItem(process.env.REACT_APP_USERKEY)
         })
     } catch (err) {
-      localStorage.removeItem(userKey)
+      localStorage.removeItem(process.env.REACT_APP_USERKEY)
     }
   }
 
@@ -70,7 +69,7 @@ const LoginView = () => {
       setFormSubmetido(true)
       await LoginService.login({ email, password: password })
         .then(response => {
-          localStorage.setItem(userKey, JSON.stringify(response.data))
+          localStorage.setItem(process.env.REACT_APP_USERKEY, JSON.stringify(response.data))
           navigate('/app/dashboard', { replace: true });
         })
         .catch(e => {

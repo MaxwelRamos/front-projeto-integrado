@@ -75,8 +75,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
 
-  const userKey = '_meritMoney_user';
-  const userLogado = JSON.parse(localStorage.getItem(userKey));
+  const userLogado = JSON.parse(localStorage.getItem(process.env.REACT_APP_USERKEY));
 
   const user = {
     // avatar: '/static/images/avatars/avatar_6.png',
@@ -100,15 +99,15 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         await ValidadeTokenService.ValidadeToken({ token: userLogado.token })
           .then(response => {
             if (!response.data.valid) {
-              localStorage.removeItem(userKey)
+              localStorage.removeItem(userprocess.env.REACT_APP_USERKEYKey)
               navigate('/login', { replace: true });
             }
           })
           .catch(e => {
-            localStorage.removeItem(userKey)
+            localStorage.removeItem(process.env.REACT_APP_USERKEY)
           })
     } catch (err) {
-      localStorage.removeItem(userKey)
+      localStorage.removeItem(process.env.REACT_APP_USERKEY)
     }
   }
 

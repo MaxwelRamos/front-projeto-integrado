@@ -30,10 +30,9 @@ const TopBar = ({
 }) => {
   const classes = useStyles();
   const [notifications] = useState([]);
-  const userKey = '_meritMoney_user';
   const navigate = useNavigate();
 
-  const userLogado = JSON.parse(localStorage.getItem(userKey));
+  const userLogado = JSON.parse(localStorage.getItem(process.env.REACT_APP_USERKEY));
 
   const [quantidadeMensal, setQuantidadeMensal] = useState(0);
 
@@ -53,7 +52,7 @@ const TopBar = ({
   getSaldo();
 
   const logout = () => {
-    localStorage.removeItem(userKey)
+    localStorage.removeItem(process.env.REACT_APP_USERKEY)
     navigate('/login', { replace: true });
   }
 

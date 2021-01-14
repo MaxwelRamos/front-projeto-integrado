@@ -43,13 +43,12 @@ const RegisterView = () => {
   const [mensagem, setMensagem] = useState('');
   
   const [formSubmetido, setFormSubmetido] = useState(false);
-  const userKey = '_meritMoney_user';
 
   const signup = async () => {
     try {
       await LoginService.signup({ name, email, password, confirmPassword })
         .then(response => {
-          localStorage.setItem(userKey, JSON.stringify(response.data))
+          localStorage.setItem(process.env.REACT_APP_USERKEY, JSON.stringify(response.data))
           navigate('/app/dashboard', { replace: true });
         })
         .catch(e => {
@@ -93,7 +92,6 @@ const RegisterView = () => {
                 name: Yup.string().max(255).required('Nome é obrigatório'),
                 confirmPassword: Yup.string().max(255).required('Confirmação da Senha é obrigatória'),
                 password: Yup.string().max(255).required('Senha é obrigatória')
-                //mm policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
             onSubmit={() => {

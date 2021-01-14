@@ -99,7 +99,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         await ValidadeTokenService.ValidadeToken({ token: userLogado.token })
           .then(response => {
             if (!response.data.valid) {
-              localStorage.removeItem(userprocess.env.REACT_APP_USERKEYKey)
+              localStorage.removeItem(process.env.REACT_APP_USERKEY)
               navigate('/login', { replace: true });
             }
           })

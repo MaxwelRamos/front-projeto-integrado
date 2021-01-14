@@ -7,14 +7,18 @@ import { LoginService } from "../../api/LoginService";
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormHelperText,
   Grid,
   Link,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 
@@ -35,6 +39,8 @@ const RegisterView = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [mensagem, setMensagem] = useState('');
   
   const [formSubmetido, setFormSubmetido] = useState(false);
   const userKey = '_meritMoney_user';
@@ -47,16 +53,18 @@ const RegisterView = () => {
           navigate('/app/dashboard', { replace: true });
         })
         .catch(e => {
-          e.response.data.errors.forEach(
-            error => alert(error))
           setFormSubmetido(false)
+          e.response.data.errors.forEach(error => { 
+            setMensagem(error)
+            setOpenDialog(true)
+          })
         })
     } catch (err) {
       setFormSubmetido(false)
-      alert('Nao foi possivel efetuar conexao com o servidor. Tente mais tarde.')
+      setMensagem('Nao foi possivel efetuar conexao com o servidor. Tente mais tarde.')
+      setOpenDialog(true)
     }
   }
-
 
   return (
     <Page
@@ -127,22 +135,14 @@ const RegisterView = () => {
                   >
                     Seja bem vindo!
                   </Typography>
-                </Box>
-                {/* <Box mb={3}>
                   <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Merit Money
-                  </Typography>
-                  <Typography
+                    align="center"
                     color="textSecondary"
-                    gutterBottom
-                    variant="body2"
+                    variant="body1"
                   >
-                    Seja bem vindo!
-                  </Typography>
-                </Box> */}
+                    {formSubmetido ? <CircularProgress/> : ""}
+                  </Typography>                  
+                </Box>
                 <TextField
                   error={Boolean(touched.name && errors.name)}
                   fullWidth
@@ -224,6 +224,17 @@ const RegisterView = () => {
             )}
           </Formik>
         </Container>
+        <Dialog open={openDialog} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" onClose={e => setOpenDialog(false)}>
+        <DialogTitle id="alert-dialog-title">{"ATENÇÃO"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {mensagem}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <button onClick={e => setOpenDialog(false)}>FECHAR</button>
+        </DialogActions>
+      </Dialog>
       </Box>
     </Page>
   );

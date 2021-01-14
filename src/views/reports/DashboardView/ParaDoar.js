@@ -11,7 +11,12 @@ import {
   Grid,
   Typography,
   colors,
-  makeStyles
+  makeStyles,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@material-ui/core';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
@@ -40,13 +45,16 @@ const ParaDoar = props => {
 
   const navigate = useNavigate();
   const [formSubmetido, setFormSubmetido] = useState(false);
-
   const [quantidadeMensal, setQuantidadeMensal] = useState(0);
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [mensagem, setMensagem] = useState('');
+
   const classes = useStyles();
 
   const resgateMensal = () => {
     const r = window.confirm("Confirma o resgate mensal para o mês atual ?")
-    if (r == true)
+    if (r === true)
       setSaldoMensal();
   }
 
@@ -55,18 +63,22 @@ const ParaDoar = props => {
       setFormSubmetido(true)
       await CoinService.setSaldoMensal()
         .then(response => {
-          alert("Saldo mensal obtido com sucesso!")
+          setMensagem("Saldo mensal obtido com sucesso!")
+          setOpenDialog(true)
           setQuantidadeMensal(response.data.quantidadeMensal)
+          navigate('/app/dashboard', { replace: true });
         })
         .catch(e => {
           e.response.data.errors.forEach(error => {
-            alert(error)
+            setMensagem(error)
+            setOpenDialog(true)
           })
           setFormSubmetido(false)
         })
     } catch (err) {
       setFormSubmetido(false)
-      alert('Nao foi possivel efetuar conexao com o servidor. Tente mais tarde.')
+      setMensagem('Nao foi possivel efetuar conexao com o servidor. Tente mais tarde.')
+      setOpenDialog(true)
     }
     setFormSubmetido(false)
   }
@@ -118,6 +130,19 @@ const ParaDoar = props => {
         </Button>
         </Box>
       </CardContent>
+
+      <Dialog open={openDialog} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" onClose={e => setOpenDialog(false)}>
+        <DialogTitle id="alert-dialog-title">{"ATENÇÃO"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {mensagem}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <button onClick={e => setOpenDialog(false)}>FECHAR</button>
+        </DialogActions>
+      </Dialog>
+
     </Card>
   );
 };

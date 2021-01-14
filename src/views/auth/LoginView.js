@@ -10,7 +10,13 @@ import {
   Link,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import { LoginService } from "../../api/LoginService";
@@ -21,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.dark,
     height: '100%',
     paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
+    paddingTop: theme.spacing(3),
   }
 }));
 
@@ -31,10 +37,11 @@ const LoginView = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [mensagem, setMensagem] = useState('');
 
   const [formSubmetido, setFormSubmetido] = useState(false);
   const userKey = '_meritMoney_user';
-
 
   useEffect(() => {
     validaToken()
@@ -60,19 +67,23 @@ const LoginView = () => {
 
   const login = async () => {
     try {
+      setFormSubmetido(true)
       await LoginService.login({ email, password: password })
         .then(response => {
           localStorage.setItem(userKey, JSON.stringify(response.data))
           navigate('/app/dashboard', { replace: true });
         })
         .catch(e => {
-          e.response.data.errors.forEach(
-            error => alert(error)) //ex: Usuario/Senha Invalido
           setFormSubmetido(false)
+          e.response.data.errors.forEach(error => {
+            setMensagem(error) 
+            setOpenDialog(true)
+          }) //ex: Usuario/Senha Invalido
         })
     } catch (err) {
       setFormSubmetido(false)
-      alert('Nao foi possivel efetuar conexao com o servidor. Tente mais tarde.')
+      setMensagem('Nao foi possivel efetuar conexao com o servidor. Tente mais tarde.')
+      setOpenDialog(true)
     }
   }
 
@@ -99,7 +110,6 @@ const LoginView = () => {
               password: Yup.string().max(255).required('Senha é obrigatória')
             })}
             onSubmit={() => {
-              setFormSubmetido(true)
               login();
             }}
           >
@@ -135,6 +145,15 @@ const LoginView = () => {
                   >
                     Seja bem vindo!
                   </Typography>
+                  
+                  <Typography
+                    align="center"
+                    color="textSecondary"
+                    variant="body1"
+                  >
+                    {formSubmetido ? <CircularProgress/> : ""}
+                  </Typography>
+ 
                 </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
@@ -192,6 +211,18 @@ const LoginView = () => {
             )}
           </Formik>
         </Container>
+
+        <Dialog open={openDialog} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description" onClose={e => setOpenDialog(false)}>
+        <DialogTitle id="alert-dialog-title">{"ATENÇÃO"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {mensagem}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <button onClick={e => setOpenDialog(false)}>FECHAR</button>
+        </DialogActions>
+      </Dialog>
       </Box>
     </Page>
   );

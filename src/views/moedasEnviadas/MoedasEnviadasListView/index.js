@@ -3,6 +3,8 @@ import {
   Box,
   Container,
   makeStyles,
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Results from './Results';
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const MoedasEnviadasListView = () => {
   const classes = useStyles();
   const [moedasEnviadas, setMoedasEnviadas] = useState([]);
+  const [formSubmetido, setFormSubmetido] = useState(false);
 
   useEffect(() => {
     getMoedasEnviadas()
@@ -27,17 +30,21 @@ const MoedasEnviadasListView = () => {
 
   const getMoedasEnviadas = async () => {
     try {
+      setFormSubmetido(true)
       await CoinService.getMoedasEnviadas()
         .then(response => {
           const listaMoedasEnviadas = response.data.moedasEnviadas
           setMoedasEnviadas(listaMoedasEnviadas)
+          setFormSubmetido(false)
         })
         .catch(e => {
           e.response.data.errors.forEach(
             error => alert(error)) 
+          setFormSubmetido(false)
         })
     } catch (err) {
       alert('Nao foi possivel efetuar conexao com o servidor. Tente mais tarde.')
+      setFormSubmetido(false)
     }
   }
 
@@ -47,6 +54,13 @@ const MoedasEnviadasListView = () => {
       title="Customers"
     >
       <Container maxWidth={false}>
+      <Typography
+          align="center"
+          color="textSecondary"
+          variant="body1"
+        >
+          {formSubmetido ? <CircularProgress /> : ""}
+        </Typography>        
         <Box mt={3}>
           <Results moedasEnviadas={moedasEnviadas} />
         </Box>

@@ -1,59 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Box,
   Button,
   Card,
   CardContent,
-  CardHeader,
-  Divider,
   Grid,
   TextField,
-  makeStyles,
   MenuItem,
-
+  Typography,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle
-
 } from '@material-ui/core';
 
 import { CoinService } from "../../../api/CoinService";
 import { LoginService } from "../../../api/LoginService";
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
-
-const useStyles = makeStyles(() => ({
-  root: {}
-}));
-
 const DoarMoedasDetails = ({ className, ...rest }) => {
-  const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
 
   const [emailDestino, setEmailDestino] = useState('');
   const [quantidadeMoeda, setQuantidadeMoeda] = useState('');
@@ -62,19 +29,9 @@ const DoarMoedasDetails = ({ className, ...rest }) => {
   const [mensagem, setMensagem] = useState('');
   const [users, setUsers] = useState([]);
 
-
   const [formSubmetido, setFormSubmetido] = useState(false);
 
-  const [currency, setCurrency] = React.useState('');
   const navigate = useNavigate();
-
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
 
   useEffect(() => {
     getUsers()
@@ -127,6 +84,13 @@ const DoarMoedasDetails = ({ className, ...rest }) => {
 
   return (
     <div>
+      <Typography
+        align="center"
+        color="textSecondary"
+        variant="body1"
+      >
+        {formSubmetido ? <CircularProgress /> : ""}
+      </Typography>
       <Card>
         <CardContent>
           <Grid container spacing={3}>

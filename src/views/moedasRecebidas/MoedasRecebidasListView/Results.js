@@ -55,7 +55,7 @@ const Results = props => {
               {moedasRecebidas.map((customer) => (
                 <TableRow>
                   <TableCell>
-                    {customer.emailDestino}
+                    {customer.email}
                   </TableCell>
                   <TableCell>
                     {customer.quantidadeMoeda}

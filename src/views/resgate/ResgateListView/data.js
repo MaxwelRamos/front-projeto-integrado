@@ -37,7 +37,7 @@ export default [
     id: uuid(),
     createdAt: '04/04/2019',
     description: '185 moedas',
-    media: '/static/images/products/lanterna.png',
+    media: '/static/images/products/Lanterna.png',
     title: 'Lanterna',
     totalDownloads: '835'
   },
@@ -45,7 +45,7 @@ export default [
     id: uuid(),
     createdAt: '04/04/2019',
     description: '480 moedas',
-    media: '/static/images/products/bolsa.png',
+    media: '/static/images/products/Bolsa.png',
     title: 'Bolsa Couro',
     totalDownloads: '835'
   }

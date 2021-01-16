@@ -61,7 +61,7 @@ const Results = props => {
                     {customer.quantidadeMoeda}
                   </TableCell>
                   <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
+                    {moment.utc(customer.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
                     {customer.motivo}
